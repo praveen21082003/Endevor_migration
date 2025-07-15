@@ -1,0 +1,69 @@
+.load_section {
+  margin: 40px auto;
+  width: 90%;
+  max-width: 800px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.success_text {
+  color: green;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.loading_text {
+  font-size: 18px;
+  color: #555;
+  margin-top: 10px;
+}
+
+.waiting_text {
+  color: #999;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+h3 {
+  font-size: 20px;
+  color: #444;
+  margin: 20px 0 10px 0;
+}
+
+.report_link {
+  display: inline-block;
+  padding: 10px 20px;
+  /* background-color: #333;
+  color: white; */
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 20px;
+}
+
+.report_link:hover {
+  background-color: rgba(6, 6, 6, 0.04);
+  color: #000;
+  transform: scale(1.05);
+}
+
+/* Spinner (reuse from earlier) */
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

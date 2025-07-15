@@ -1,0 +1,33 @@
+.mapping_section {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  margin-top: 10px;
+}
+
+.mapping_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.mapping_table th,
+.mapping_table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.mapping_table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.loading_text,
+.error_text,
+.empty_text {
+  margin-top: 20px;
+  font-size: 1rem;
+}

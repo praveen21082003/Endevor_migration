@@ -1,0 +1,13 @@
+.video_section {
+    margin-top: 0px;
+    text-align: center;
+    height: 90%;
+    width: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.video_section video {
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
