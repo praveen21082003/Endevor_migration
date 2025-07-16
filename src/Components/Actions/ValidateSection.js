@@ -6,7 +6,7 @@ function ValidateSection({ loading, success }) {
       {loading ? (
         <>
           <div className="spinner"></div>
-          <p className="loading_text">🔄 Generating report files...</p>
+          <p className="loading_text"> Generating report files...</p>
         </>
       ) : success ? (
         <>
