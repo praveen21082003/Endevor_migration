@@ -8,7 +8,6 @@ import VideoSection from "./Actions/VideoSection";
 import Mapping from "./Actions/Mapping";
 import RefreshSection from './Actions/RefreshSection';
 
-
 function Container({
   action,
   fileUploaded,
@@ -89,39 +88,11 @@ function Container({
     }
   }, []);
 
-  const handleRefresh = useCallback(async () => {
-    try {
-      const response = await fetch('http://localhost:9090/refresh', {
-        method: 'GET',
-      });
-
-      if (response.ok) {
-        alert('✅ Local files deleted successfully.');
-        setFileUploaded(false);
-        setLoadedToDB(false);
-        setTransformed(false);
-        setSelectedFile(null);
-        setPlatform('');
-      } else {
-        alert('❌ Refresh failed.');
-      }
-    } catch (error) {
-      console.error('Refresh error:', error);
-      alert('🚫 Error deleting local files.');
-    }
-  }, [setFileUploaded, setLoadedToDB, setTransformed]);
-
   useEffect(() => {
     if (action === 'validate') {
       handleValidation();
     }
   }, [action, handleValidation]);
-
-  useEffect(() => {
-    if (action === 'refresh') {
-      handleRefresh();
-    }
-  }, [action, handleRefresh]);
 
   return (
     <div className="content_display">
@@ -155,6 +126,8 @@ function Container({
           setFileUploaded={setFileUploaded}
           setLoadedToDB={setLoadedToDB}
           setTransformed={setTransformed}
+          setSelectedFile={setSelectedFile}
+          setPlatform={setPlatform}
         />
       )}
 

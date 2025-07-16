@@ -39,7 +39,7 @@ function App() {
             ['Load DB', 'load'],
             ['Mapping', 'mapping'],
             ['Transform', 'transform'],
-            ['Refresh', 'refresh'],
+            ['Delete', 'refresh'],
             ['Validate & Report', 'validate'],
           ].map(([label, key]) => (
             <div className="btn_with_arrow" key={key}>
