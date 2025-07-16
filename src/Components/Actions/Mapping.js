@@ -44,7 +44,11 @@ function Mapping() {
       <h2>SOURCE & TARGET EQUIVALENCE</h2>
 
       {loading ? (
-        <p className="loading_text">🔄 Loading mapping...</p>
+        <>
+          <div className="spinner"></div>
+          <p className="loading_text"> Loading mapping...</p>
+        </>
+
       ) : error ? (
         <p className="error_text">{error}</p>
       ) : mappingData ? (

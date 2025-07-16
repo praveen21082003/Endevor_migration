@@ -1,43 +1,57 @@
+import { useState } from 'react';
 import './styles/validate.css';
 
-function ValidateSection({ loading, success }) {
-  return (
-    <div className="load_section">
-      {loading ? (
-        <>
-          <div className="spinner"></div>
-          <p className="loading_text"> Generating report files...</p>
-        </>
-      ) : success ? (
-        <>
-          
-          <a
-            href="http://localhost:9090/reports/filesize"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="report_link"
-          >
-            ➡ 📄 <h3>Validate FilesSize</h3>
-          </a>
-          
-          
+function ValidateSection() {
+  const [loadingSize, setLoadingSize] = useState(false);
+  const [loadingCount, setLoadingCount] = useState(false);
 
-          <br />
-          
-          <a
-            href="http://localhost:9090/reports/filecount"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="report_link"
-          >
-            ➡ 📄 <h3>Validate FilesCount</h3>
-          </a>
-          
-          
-        </>
-      ) : (
-        <p className="waiting_text">⚠️ No validation in progress or not triggered.</p>
-      )}
+  const generateReport = (type) => {
+    if (type === "size") {
+      setLoadingSize(true);
+      setTimeout(() => {
+        setLoadingSize(false);
+        window.open("http://localhost:9090/reports/filesize", "_blank");
+      }, 1500);
+    } else {
+      setLoadingCount(true);
+      setTimeout(() => {
+        setLoadingCount(false);
+        window.open("http://localhost:9090/reports/filecount", "_blank");
+      }, 1500);
+    }
+  };
+
+  return (
+    <div className="validate_container">
+      <h2>✅ Validation Reports</h2>
+
+      <div className="report_card">
+        <div className="report_info">
+          <span role="img" aria-label="document">📄</span>
+          <h3>File Size Report</h3>
+        </div>
+        {loadingSize ? (
+          <div className="spinner_small" />
+        ) : (
+          <button onClick={() => generateReport("size")} className="report_button">
+            Generate Report
+          </button>
+        )}
+      </div>
+
+      <div className="report_card">
+        <div className="report_info">
+          <span role="img" aria-label="document">📄</span>
+          <h3>File Count Report</h3>
+        </div>
+        {loadingCount ? (
+          <div className="spinner_small" />
+        ) : (
+          <button onClick={() => generateReport("count")} className="report_button">
+            Generate Report
+          </button>
+        )}
+      </div>
     </div>
   );
 }

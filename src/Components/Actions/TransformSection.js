@@ -10,16 +10,22 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
   const [backendMessage, setBackendMessage] = useState('');
 
   const handleSubmit = async () => {
-    if (!sourcePlatform || !targetPlatform) {
+    console.log("Submit clicked"); // ✅ Debug
+    console.log("Source:", sourcePlatform);
+    console.log("Target:", targetPlatform);
+
+    if (sourcePlatform === "" || targetPlatform === "") {
       alert("⚠️ Please select both Source and Target platforms.");
       return;
     }
 
+    // Proceed only if valid
     setLoading(true);
     setLoadingState(true);
     setSuccess(false);
     setSuccessState(false);
     setProgress(0);
+
     const interval = setInterval(() => {
       setProgress((prev) => {
         const next = prev + 1;
@@ -33,7 +39,7 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
     const payload = {
       sourcePlatform: sourcePlatform,
       platform: targetPlatform,
-      type: "target" // 🔑 Important for your backend to push
+      type: "target",
     };
 
     try {
@@ -65,6 +71,7 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
       setLoadingState(false);
     }
   };
+
 
   return (
     <div className="load_section">
@@ -107,11 +114,10 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
               </select>
             </div>
           </div>
-
           <button
             className="transformbtns"
             onClick={handleSubmit}
-            disabled={!sourcePlatform || !targetPlatform}
+            disabled={loadingState}
           >
             Transform from {sourcePlatform || '...'} to {targetPlatform || '...'}
           </button>

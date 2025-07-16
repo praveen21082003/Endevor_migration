@@ -3,10 +3,15 @@ import Button from './Components/Button';
 import Container from './Components/Container';
 import { useState } from 'react';
 
+import { MdOutlineSlowMotionVideo } from "react-icons/md";
+import { FaFileUpload, FaDatabase, FaSyncAlt, FaCheckCircle } from "react-icons/fa";
+import { TbArrowsTransferUp } from "react-icons/tb";
+import { VscSymbolMisc } from "react-icons/vsc";
+import { MdDeleteSweep } from "react-icons/md";
+
 function App() {
   const [selectedAction, setSelectedAction] = useState('');
 
-  // Track user progress through steps
   const [fileUploaded, setFileUploaded] = useState(false);
   const [loadedToDB, setLoadedToDB] = useState(false);
   const [transformed, setTransformed] = useState(false);
@@ -22,8 +27,33 @@ function App() {
       return;
     }
 
+    if (action === 'mapping' && !loadedToDB){
+      alert('⚠️ Please load to database first.');
+      return;
+    }
+
+    if (action === 'refresh' && !transformed){
+      alert('⚠️ Please transform source to target first.');
+      return;
+    }
+
+    if (action === 'validate' && !transformed){
+      alert('⚠️ Please transform source to target first.');
+      return;
+    }
+
     setSelectedAction(action);
   };
+
+  const buttons = [
+    { label: 'SCM Source', key: 'source', icon: <MdOutlineSlowMotionVideo /> },
+    { label: 'Endeavor Extract', key: 'extract', icon: <FaFileUpload /> },
+    { label: 'Load DB', key: 'load', icon: <FaDatabase /> },
+    { label: 'Mapping', key: 'mapping', icon: <VscSymbolMisc /> },
+    { label: 'Transform', key: 'transform', icon: <TbArrowsTransferUp /> },
+    { label: 'Delete', key: 'refresh', icon: <MdDeleteSweep /> },
+    { label: 'Validate & Report', key: 'validate', icon: <FaCheckCircle /> },
+  ];
 
   return (
     <>
@@ -33,18 +63,14 @@ function App() {
 
       <div className="btnsandcontainer">
         <div className="Btns_container">
-          {[
-            ['SCM Source', 'source'],
-            ['Endeavor Extract', 'extract'],
-            ['Load DB', 'load'],
-            ['Mapping', 'mapping'],
-            ['Transform', 'transform'],
-            ['Delete', 'refresh'],
-            ['Validate & Report', 'validate'],
-          ].map(([label, key]) => (
+          {buttons.map(({ label, key, icon }) => (
             <div className="btn_with_arrow" key={key}>
               <Button
-                label={label}
+                label={
+                  <span className="btn_with_icon">
+                    {icon} {label}
+                  </span>
+                }
                 onClick={() => handleAction(key)}
                 active={selectedAction === key}
               />
