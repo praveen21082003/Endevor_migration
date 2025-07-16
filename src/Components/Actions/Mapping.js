@@ -11,23 +11,26 @@ function Mapping() {
     const fetchMapping = async () => {
       try {
         const response = await fetch('http://localhost:9090/mapping');
-        const text = await response.text(); // Get raw backend response
+        
+        if (!response.ok) {
+          throw new Error(`Server responded with status ${response.status}`);
+        }
 
-        setRawResponse(text); // Show raw backend response to user
+        const text = await response.text();
+        setRawResponse(text);
 
         try {
-          const json = JSON.parse(text); 
+          const json = JSON.parse(text);
           if (json && typeof json === 'object') {
             setMappingData(json);
           } else {
-            setError('Invalid data format received from server.');
+            setError('⚠️ Invalid JSON structure.');
           }
         } catch (jsonError) {
           setError('⚠️ Response is not valid JSON. Check backend.');
         }
-
       } catch (err) {
-        setError(`❌ ${err.message || 'Unexpected error'}`);
+        setError(`❌ Fetch error: ${err.message}`);
       } finally {
         setLoading(false);
       }

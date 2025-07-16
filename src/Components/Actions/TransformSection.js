@@ -32,8 +32,9 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
     }, 300);
 
     const payload = {
-      source: sourcePlatform,
-      target: targetPlatform,
+      sourcePlatform: sourcePlatform,
+      platform: targetPlatform,
+      type: "target" // 🔑 Important for your backend to push
     };
 
     try {
@@ -45,14 +46,15 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
         body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
-        const result = await response.text();
-        setTransformOutput(result);
-        setBackendMessage(result);
+      const result = await response.text();
+      setTransformOutput(result);
+      setBackendMessage(result);
+
+      if (response.ok && result.toLowerCase().includes("success")) {
         setSuccess(true);
         setSuccessState(true);
       } else {
-        alert("❌ Transform failed");
+        alert("⚠️ Transform ran but may not be successful.");
       }
     } catch (error) {
       console.error("Transform error:", error);
@@ -77,7 +79,7 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
           </p>
         </>
       ) : successState ? (
-        <p className="success_text"> {backendMessage}</p>
+        <p className="success_text">✅ {backendMessage}</p>
       ) : (
         <>
           <div className="select_wrapper">
@@ -88,8 +90,8 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
                 onChange={(e) => setSourcePlatform(e.target.value)}
               >
                 <option value="">-- SOURCE --</option>
-                <option value="Endevor">ENDEVOR</option>
-                <option value="Changeman">CHANGEMAN</option>
+                <option value="endevor">ENDEVOR</option>
+                <option value="changeman">CHANGEMAN</option>
               </select>
             </div>
             <div>

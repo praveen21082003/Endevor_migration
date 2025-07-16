@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./styles/Load.css";
 
-function LoadSection({ selectedFile, onLoadMongo, onLoadDB2 }) {
+function LoadSection({ selectedFile, onLoadMongo, onLoadDB2, setLoadedToDB }) {
   const [selectedDB, setSelectedDB] = useState('');
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -19,7 +19,6 @@ function LoadSection({ selectedFile, onLoadMongo, onLoadDB2 }) {
     setProgress(0);
     setBackendMessage('');
 
-    // Simulate progress
     const interval = setInterval(() => {
       setProgress((prev) => {
         const next = prev + 10;
@@ -37,7 +36,13 @@ function LoadSection({ selectedFile, onLoadMongo, onLoadDB2 }) {
       }
 
       const text = await response.text();
+      const cleanedText = text.trim().toLowerCase();
       setBackendMessage(text);
+
+      // Check for success in response content
+      if (cleanedText.includes("ok") || cleanedText.includes("success")) {
+        setLoadedToDB(true);
+      }
     } catch (error) {
       console.error("Upload error:", error);
       setBackendMessage("🚫 Error while uploading.");
@@ -60,8 +65,12 @@ function LoadSection({ selectedFile, onLoadMongo, onLoadDB2 }) {
     <div className="load_section">
       {!selectedDB ? (
         <>
-          <button className="loadbtns" onClick={() => handleDBSelect('mongo')}>Load to MongoDB</button>
-          <button className="loadbtns" onClick={() => handleDBSelect('db2')}>Load to DB2</button>
+          <button className="loadbtns" onClick={() => handleDBSelect('mongo')}>
+            Load to MongoDB
+          </button>
+          <button className="loadbtns" onClick={() => handleDBSelect('db2')}>
+            Load to DB2
+          </button>
         </>
       ) : (
         <>
@@ -70,7 +79,9 @@ function LoadSection({ selectedFile, onLoadMongo, onLoadDB2 }) {
               <div className="progress_wrapper">
                 <div className="progress_bar" style={{ width: `${progress}%` }}></div>
               </div>
-              <p className="loading_text">Uploading to {selectedDB.toUpperCase()}... ({progress}%)</p>
+              <p className="loading_text">
+                Uploading to {selectedDB.toUpperCase()}... ({progress}%)
+              </p>
             </>
           ) : (
             <p className="success_text">✅ {backendMessage}</p>

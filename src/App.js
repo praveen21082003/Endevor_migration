@@ -6,17 +6,17 @@ import { useState } from 'react';
 function App() {
   const [selectedAction, setSelectedAction] = useState('');
 
-  // State to track process flow
+  // Track user progress through steps
   const [fileUploaded, setFileUploaded] = useState(false);
   const [loadedToDB, setLoadedToDB] = useState(false);
   const [transformed, setTransformed] = useState(false);
 
   const handleAction = (action) => {
-    // Restrict next step if previous not done
     if (action === 'load' && !fileUploaded) {
       alert('⚠️ Please upload a file first (Endeavor Extract).');
       return;
     }
+
     if (action === 'transform' && !loadedToDB) {
       alert('⚠️ Please load to database first.');
       return;
@@ -40,10 +40,14 @@ function App() {
             ['Transform', 'transform'],
             ['Mapping', 'mapping'],
             ['Refresh', 'refresh'],
-            ['Validate & Report', 'validate']
+            ['Validate & Report', 'validate'],
           ].map(([label, key]) => (
             <div className="btn_with_arrow" key={key}>
-              <Button label={label} onClick={() => handleAction(key)} active={selectedAction === key} />
+              <Button
+                label={label}
+                onClick={() => handleAction(key)}
+                active={selectedAction === key}
+              />
               {selectedAction === key && <span className="arrow_mark">⭢</span>}
             </div>
           ))}

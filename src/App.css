@@ -17,7 +17,7 @@ body{
   justify-content: center;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Space between buttons */
+  gap: 15px; /* Space between buttons */
 }
 .btnsandcontainer{
   display: flex;

@@ -5,8 +5,9 @@ import LoadSection from "./Actions/LoadSection";
 import TransformSection from "./Actions/TransformSection";
 import ValidateSection from "./Actions/ValidateSection";
 import VideoSection from "./Actions/VideoSection";
+import Mapping from "./Actions/Mapping";
 import RefreshSection from './Actions/RefreshSection';
-import Mapping from './Actions/Mapping'; // ✅ Import your new Mapping component
+
 
 function Container({
   action,
@@ -35,104 +36,34 @@ function Container({
   };
 
   const handleLoadToMongo = useCallback(async () => {
-    if (!selectedFile) {
-      alert("Please upload a file first in the 'Extract' section.");
-      return;
-    }
-
-    setLoading(true);
-    setSuccess(false);
-
     const formData = new FormData();
     formData.append("file", selectedFile);
 
     try {
-      const response = await fetch("http://localhost:9090/extract", {
+      return await fetch("http://localhost:9090/extract", {
         method: "POST",
         body: formData,
       });
-
-      if (response.ok) {
-        await response.text();
-        setSuccess(true);
-        setLoadedToDB(true);
-      } else {
-        alert("❌ Upload failed");
-      }
     } catch (error) {
-      console.error("Upload error:", error);
-      alert("🚫 Server error");
-    } finally {
-      setLoading(false);
+      console.error("Mongo Upload Error:", error);
+      throw error;
     }
-  }, [selectedFile, setLoadedToDB]);
+  }, [selectedFile]);
 
   const handleLoadToDB2 = useCallback(async () => {
-    if (!selectedFile) {
-      alert("Please upload a file first.");
-      return;
-    }
-
-    setLoading(true);
-    setSuccess(false);
-
     const formData = new FormData();
     formData.append("file", selectedFile);
 
     try {
-      const response = await fetch("http://localhost:9090/extractdb2", {
+      return await fetch("http://localhost:9090/extractdb2", {
         method: "POST",
         body: formData,
       });
-
-      if (response.ok) {
-        await response.text();
-        setSuccess(true);
-        setLoadedToDB(true);
-      } else {
-        alert("❌ DB2 Upload failed");
-      }
     } catch (error) {
-      console.error("DB2 Upload error:", error);
-      alert("🚫 DB2 Server error");
-    } finally {
-      setLoading(false);
+      console.error("DB2 Upload Error:", error);
+      throw error;
     }
-  }, [selectedFile, setLoadedToDB]);
-
-  const handleTransform = useCallback(async () => {
-    if (!platform) {
-      alert("⚠️ Please select either a source or a target platform.");
-      return;
-    }
-
-    setLoading(true);
-    setSuccess(false);
-
-    try {
-      const response = await fetch("http://localhost:9090/api/transform", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ platform }),
-      });
-
-      if (response.ok) {
-        const result = await response.text();
-        setTransformOutput(result);
-        setSuccess(true);  
-        setTransformed(true);
-      } else {
-        alert("❌ Transform failed");
-      }
-    } catch (error) {
-      console.error("Transform error:", error);
-      alert("🚫 Error during transformation");
-    } finally {
-      setLoading(false);
-    }
-  }, [platform, setTransformed]);
+  }, [selectedFile]);
 
   const handleValidation = useCallback(async () => {
     setLoading(true);
@@ -202,11 +133,10 @@ function Container({
 
       {action === 'load' && (
         <LoadSection
-          loading={loading}
-          success={success}
           selectedFile={selectedFile}
           onLoadMongo={handleLoadToMongo}
           onLoadDB2={handleLoadToDB2}
+          setLoadedToDB={setLoadedToDB} // ✅ This enables next step
         />
       )}
 
@@ -218,9 +148,7 @@ function Container({
         />
       )}
 
-      {action === 'mapping' && (
-        <Mapping />
-      )}
+      {action === 'mapping' && <Mapping />}
 
       {action === 'refresh' && (
         <RefreshSection
