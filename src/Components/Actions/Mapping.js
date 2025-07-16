@@ -52,8 +52,8 @@ function Mapping() {
           <table className="mapping_table">
             <thead>
               <tr>
-                <th>Key</th>
-                <th>Value</th>
+                <th>ENDEVOR</th>
+                <th>GIT BASED</th>
               </tr>
             </thead>
             <tbody>

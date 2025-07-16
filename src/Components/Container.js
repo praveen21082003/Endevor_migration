@@ -136,7 +136,7 @@ function Container({
           selectedFile={selectedFile}
           onLoadMongo={handleLoadToMongo}
           onLoadDB2={handleLoadToDB2}
-          setLoadedToDB={setLoadedToDB} // ✅ This enables next step
+          setLoadedToDB={setLoadedToDB} 
         />
       )}
 
