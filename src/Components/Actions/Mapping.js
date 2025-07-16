@@ -71,7 +71,6 @@ function Mapping() {
         </>
       ) : (
         <p className="empty_text">⚠️ No mapping data found.</p>
-        <p>hello</p>
       )}
     </div>
   );
