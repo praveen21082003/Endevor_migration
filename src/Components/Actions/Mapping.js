@@ -41,7 +41,7 @@ function Mapping() {
 
   return (
     <div className="mapping_section">
-      <h2>📌 Current Migration Mapping</h2>
+      <h2>SOURCE & TARGET EQUIVALENCE</h2>
 
       {loading ? (
         <p className="loading_text">🔄 Loading mapping...</p>
@@ -52,8 +52,8 @@ function Mapping() {
           <table className="mapping_table">
             <thead>
               <tr>
-                <th>Key</th>
-                <th>Value</th>
+                <th>ENDEVOR</th>
+                <th>GIT BASED</th>
               </tr>
             </thead>
             <tbody>
@@ -65,9 +65,6 @@ function Mapping() {
               ))}
             </tbody>
           </table>
-          <p className="raw_response">
-            <strong>Raw Response:</strong> <code>{rawResponse}</code>
-          </p>
         </>
       ) : (
         <p className="empty_text">⚠️ No mapping data found.</p>
