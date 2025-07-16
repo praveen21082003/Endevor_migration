@@ -110,12 +110,12 @@ function Container({
           setLoadedToDB={setLoadedToDB} 
         />
       )}
-
       {action === 'transform' && (
         <TransformSection
           setLoading={setLoading}
           setSuccess={setSuccess}
           setTransformOutput={setTransformOutput}
+          setTransformed={setTransformed}  // ✅ Add this line
         />
       )}
 

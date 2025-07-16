@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import "./styles/Load.css";
+import { SiMongodb } from "react-icons/si";
+import { LuDatabaseBackup } from "react-icons/lu";
 
 function LoadSection({ selectedFile, onLoadMongo, onLoadDB2, setLoadedToDB }) {
   const [selectedDB, setSelectedDB] = useState('');
@@ -66,10 +68,10 @@ function LoadSection({ selectedFile, onLoadMongo, onLoadDB2, setLoadedToDB }) {
       {!selectedDB ? (
         <>
           <button className="loadbtns" onClick={() => handleDBSelect('mongo')}>
-            Load to MongoDB
+            <SiMongodb /> Load to MongoDB
           </button>
           <button className="loadbtns" onClick={() => handleDBSelect('db2')}>
-            Load to DB2
+            <LuDatabaseBackup /> Load to DB2
           </button>
         </>
       ) : (

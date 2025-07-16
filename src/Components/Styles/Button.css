@@ -22,10 +22,10 @@
 
 .arrow_mark {
   color: green;
-  font-size: 5.0rem;
+  font-size: 3.0rem;
   position: absolute;
   left: 120%;
-  top: 40%;
+  top: 60%;
   transform: translateY(-50%);
 }
 

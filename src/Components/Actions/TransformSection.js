@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './styles/transform.css';
 
-function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
+function TransformSection({ setLoading, setSuccess, setTransformOutput, setTransformed }) {
   const [targetPlatform, setTargetPlatform] = useState('');
   const [sourcePlatform, setSourcePlatform] = useState('');
   const [progress, setProgress] = useState(0);
@@ -10,28 +10,22 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
   const [backendMessage, setBackendMessage] = useState('');
 
   const handleSubmit = async () => {
-    console.log("Submit clicked"); // ✅ Debug
-    console.log("Source:", sourcePlatform);
-    console.log("Target:", targetPlatform);
-
-    if (sourcePlatform === "" || targetPlatform === "") {
+    if (!sourcePlatform || !targetPlatform) {
       alert("⚠️ Please select both Source and Target platforms.");
       return;
     }
 
-    // Proceed only if valid
     setLoading(true);
     setLoadingState(true);
     setSuccess(false);
     setSuccessState(false);
+    setTransformed(false);
     setProgress(0);
 
     const interval = setInterval(() => {
       setProgress((prev) => {
         const next = prev + 1;
-        if (next >= 100) {
-          clearInterval(interval);
-        }
+        if (next >= 100) clearInterval(interval);
         return next;
       });
     }, 200);
@@ -58,6 +52,7 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
       if (response.ok && result.toLowerCase().includes("success")) {
         setSuccess(true);
         setSuccessState(true);
+        setTransformed(true); // ✅ Set this only on successful transform
       } else {
         alert("⚠️ Transform ran but may not be successful.");
       }
@@ -71,7 +66,6 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
       setLoadingState(false);
     }
   };
-
 
   return (
     <div className="load_section">
@@ -117,7 +111,7 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
           <button
             className="transformbtns"
             onClick={handleSubmit}
-            disabled={loadingState}
+            disabled={!sourcePlatform || !targetPlatform || loadingState}
           >
             Transform from {sourcePlatform || '...'} to {targetPlatform || '...'}
           </button>

@@ -8,6 +8,7 @@ import { FaFileUpload, FaDatabase, FaSyncAlt, FaCheckCircle } from "react-icons/
 import { TbArrowsTransferUp } from "react-icons/tb";
 import { VscSymbolMisc } from "react-icons/vsc";
 import { MdDeleteSweep } from "react-icons/md";
+import { TiArrowRightThick } from "react-icons/ti";
 
 function App() {
   const [selectedAction, setSelectedAction] = useState('');
@@ -74,7 +75,7 @@ function App() {
                 onClick={() => handleAction(key)}
                 active={selectedAction === key}
               />
-              {selectedAction === key && <span className="arrow_mark">⭢</span>}
+              {selectedAction === key && <span className="arrow_mark"><TiArrowRightThick /></span>}
             </div>
           ))}
         </div>
