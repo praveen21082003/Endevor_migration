@@ -20,16 +20,15 @@ function TransformSection({ setLoading, setSuccess, setTransformOutput }) {
     setSuccess(false);
     setSuccessState(false);
     setProgress(0);
-
     const interval = setInterval(() => {
       setProgress((prev) => {
-        const next = prev + 10;
-        if (next >= 90) {
+        const next = prev + 1;
+        if (next >= 100) {
           clearInterval(interval);
         }
         return next;
       });
-    }, 300);
+    }, 200);
 
     const payload = {
       sourcePlatform: sourcePlatform,

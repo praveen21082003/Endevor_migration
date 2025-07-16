@@ -63,36 +63,41 @@ function RefreshSection({
       setDeleting(false);
     }
   };
+  const renderTree = (node, depth = 0, isLast = true) => {
+    const entries = Object.entries(node);
+    return entries.map(([key, value], index) => {
+      const isFolder = typeof value === 'object';
+      const prefix = depth === 0 ? '' :
+        `${'│   '.repeat(depth - 1)}${isLast && index === entries.length - 1 ? '└── ' : '├── '}`;
 
-  const renderTree = (node) => {
-    return Object.entries(node).map(([key, value]) => {
-      if (typeof value === 'object') {
-        return (
-          <div key={key} className="folder">
-            📁 {key}
-            <div className="subfolder">{renderTree(value)}</div>
+      return (
+        <div key={key} className="folder-tree-line">
+          <div style={{ whiteSpace: "pre", fontFamily: "monospace" }}>
+            {prefix}📁 {key}
           </div>
-        );
-      } else {
-        return (
-          <div key={key} className="file">
-            📄 {value}
-          </div>
-        );
-      }
+          {isFolder && renderTree(value, depth + 1, index === entries.length - 1)}
+        </div>
+      );
     });
   };
 
-  return (
-    <div className="refresh-section">
-        <>
-          <div className="folder-view">{renderTree(structure)}</div>
-          <button onClick={handleDelete} disabled={deleting}>
-            {deleting ? "Deleting..." : "🗑️ Confirm Delete"}
-          </button>
-        </>
-    </div>
-  );
+return (
+  <div className="refresh-section">
+    {structure && (
+      <>
+        <div className="folder-view">
+          <h3>Folder Structure (to be deleted) : </h3>
+          {renderTree(structure)}
+        </div>
+        <button className="del_btns" onClick={handleDelete} disabled={deleting}>
+          {deleting ? "Deleting..." : "🗑️ Confirm Delete"}
+        </button>
+      </>
+    )}
+    {status && <p>{status}</p>}
+  </div>
+);
+
 }
 
 export default RefreshSection;
