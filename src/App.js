@@ -37,8 +37,8 @@ function App() {
             ['SCM Source', 'source'],
             ['Endeavor Extract', 'extract'],
             ['Load DB', 'load'],
-            ['Transform', 'transform'],
             ['Mapping', 'mapping'],
+            ['Transform', 'transform'],
             ['Refresh', 'refresh'],
             ['Validate & Report', 'validate'],
           ].map(([label, key]) => (
